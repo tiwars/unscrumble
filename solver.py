@@ -21,7 +21,7 @@ def createDictionary(filePath):
 	sys.exit(0)
     line = f.readline()
     while line :
-        dictionary.append(line.strip())
+        dictionary.append(line.strip().lower())
         line = f.readline()
     ## creating a set of dictionary
     dictionary = set(dictionary)
@@ -51,14 +51,19 @@ def main():
             # print combination
             if(not toRestrictWordLength or len(combination) == int(sys.argv[2])):
                 for each in sorted(set(permute(combination))):
-                	if (each in dictionary):
+                	if (each.lower() in dictionary):
                 	    found = True
                 	    words.append(each)
 
+    length = 2;
     if(found == False):
 	   print "No word found in dictionary for the character"," ".join(sys.argv[3:])
     else:
-        print (sorted(words));
+        for each in  sorted(words, key=lambda x: (len(x),x)):
+            if(len(each) > length):
+                length = len(each);
+                print "\n============ "+ str(length) +" character words =============\n"
+            print each
 
 if __name__ == '__main__':
     main()
